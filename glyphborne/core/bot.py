@@ -8,6 +8,7 @@ from disnake.ext import commands
 from sqlmodel import SQLModel, create_engine
 
 from glyphborne.core.configuration import configuration
+from glyphborne.utils.database.operations import operations
 
 sqlite_file_name = configuration["database_file"]
 sqlite_url = f"sqlite:///{sqlite_file_name}"
@@ -17,6 +18,7 @@ class Bot(commands.InteractionBot):
     def __init__(self):
         self.config = configuration
         self.engine = create_engine(sqlite_url, echo=self.config["sqlmodel_echo"])
+        self.operations = operations
 
         super().__init__(test_guilds=self.config["test_guilds"])
 
